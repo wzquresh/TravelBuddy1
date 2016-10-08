@@ -48,15 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String userID = null;
     Button testButton;
 
-    EditText firstName;
-    EditText lastName;
-    EditText age;
-    EditText gender;
-    EditText city;
-    EditText state;
-    EditText startDate;
-    EditText endDate;
-    EditText interests;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

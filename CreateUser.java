@@ -1,6 +1,7 @@
 package com.example.waqas.mhacks8;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +34,17 @@ public class CreateUser  extends AppCompatActivity {
     private String myStartDate;
     private String myEndDate;
     private String myInterests;
-    private String myUserID;
+    private String myUserID = null;
+
+    EditText firstName;
+    EditText lastName;
+    EditText age;
+    EditText gender;
+    EditText city;
+    EditText state;
+    EditText startDate;
+    EditText endDate;
+    EditText interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,7 @@ public class CreateUser  extends AppCompatActivity {
         lastName = (EditText) findViewById(R.id.etLastName);
         age = (EditText) findViewById(R.id.etAge);
         gender = (EditText) findViewById(R.id.etGender);
-        String info = firstName + "\n" + lastName + "\n" + age + "\n" + gender + "\n" + userID;
+        String info = firstName + "\n" + lastName + "\n" + age + "\n" + gender + "\n" + myUserID;
 
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput("userData.txt", Context.MODE_PRIVATE));
@@ -78,6 +89,8 @@ public class CreateUser  extends AppCompatActivity {
             }
             else{
                 //Open first page to create a userID
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
 
             inputStream.close();
@@ -90,6 +103,8 @@ public class CreateUser  extends AppCompatActivity {
     }
 
     public void switchView(View view){
-
+        Intent intent = new Intent(getApplicationContext(), Listings.class);
+        intent.putExtra("ID", myUserID);
+        startActivity(intent);
     }
 }

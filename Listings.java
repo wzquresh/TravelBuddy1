@@ -39,6 +39,7 @@ public class Listings  extends AppCompatActivity {
     EditText endDate;
     EditText interests;
 
+    private String myUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class Listings  extends AppCompatActivity {
         setContentView(R.layout.view_listing);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        myUserID = getIntent().getStringExtra("ID");
     }
 
     public void createListing(View view){
