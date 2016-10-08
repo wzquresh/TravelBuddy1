@@ -1,5 +1,7 @@
 package com.example.waqas.mhacks8;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.android.volley.toolbox.Volley;
 
@@ -25,6 +31,8 @@ import java.io.OutputStreamWriter;
 
 public class CreateUser  extends AppCompatActivity {
 
+    private Context context = this;
+
     private String myFirstName;
     private String myLastName;
     private String myAge;
@@ -39,7 +47,7 @@ public class CreateUser  extends AppCompatActivity {
     EditText firstName;
     EditText lastName;
     EditText age;
-    EditText gender;
+    Spinner gender;
     EditText city;
     EditText state;
     EditText startDate;
@@ -54,6 +62,40 @@ public class CreateUser  extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         myUserID = getIntent().getStringExtra("ID");
+
+        setContentView(R.layout.activity_main);
+
+        ImageView imageViewProfilePicture = (ImageView) findViewById(R.id.imageViewProfilePicture);
+
+        imageViewProfilePicture.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.get_user_profile_picture_layout);
+                dialog.setTitle("Get A Profile Picture");
+
+                ImageView imageViewSelectPicture = (ImageView) dialog.findViewById(R.id.imageViewSelectImage);
+                imageViewSelectPicture.setImageResource(R.drawable.folderphoto);
+
+                ImageView imageViewTakePicture = (ImageView) dialog.findViewById(R.id.imageViewTakePicture);
+                imageViewTakePicture.setImageResource(R.drawable.camera);
+
+                dialog.show();
+            }
+        });
+
+
+
+        Spinner genderDropDown = (Spinner) findViewById(R.id.spinnerMaleFemale);
+        String[] genderItems = new String[]{"M", "F"};
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, genderItems);
+        genderDropDown.setAdapter(genderAdapter);
+
+
     }
 
 
@@ -61,7 +103,7 @@ public class CreateUser  extends AppCompatActivity {
         firstName = (EditText) findViewById(R.id.etFirstName);
         lastName = (EditText) findViewById(R.id.etLastName);
         age = (EditText) findViewById(R.id.etAge);
-        gender = (EditText) findViewById(R.id.etGender);
+        gender = (Spinner) findViewById(R.id.spinnerMaleFemale);   //this is now a spinner
         String info = firstName + "\n" + lastName + "\n" + age + "\n" + gender + "\n" + myUserID;
 
         try {

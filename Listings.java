@@ -1,5 +1,6 @@
 package com.example.waqas.mhacks8;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +31,16 @@ import java.util.Map;
  */
 
 public class Listings  extends AppCompatActivity {
+
+    private String myFirstName;
+    private String myLastName;
+    private String myAge;
+    private String myGender;
+    private String myCity;
+    private String myState;
+    private String myStartDate;
+    private String myEndDate;
+    private String myInterests;
 
     RequestQueue queue;
     private static final String TAG = MainActivity.class.getSimpleName();  //prints entire error
@@ -49,6 +65,34 @@ public class Listings  extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         myUserID = getIntent().getStringExtra("ID");
+    }
+
+    public void readFile(View view){
+
+        try{
+            InputStream inputStream = this.openFileInput("userData.txt");
+            if(inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                myFirstName = bufferedReader.readLine().toString();
+                myLastName = bufferedReader.readLine().toString();
+                myAge = bufferedReader.readLine().toString();
+                myGender = bufferedReader.readLine().toString();
+                myUserID = bufferedReader.readLine().toString();
+            }
+            else{
+                //Open first page to create a userID
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+
+            inputStream.close();
+
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void createListing(View view){
